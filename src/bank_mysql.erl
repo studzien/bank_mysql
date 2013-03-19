@@ -402,6 +402,10 @@ parse_bin_row(Packet, [{field, _, integer, ?MYSQL_TYPE_TINY}|Fields],
 		<< 0:1, NullRest/bits >>, Acc) ->
 	<< Value:8/little, Rest/binary >> = Packet,
 	parse_bin_row(Rest, Fields, NullRest, [Value|Acc]);
+parse_bin_row(Packet, [{field, _, integer, ?MYSQL_TYPE_SHORT}|Fields],
+		<< 0:1, NullRest/bits >>, Acc) ->
+	<< Value:16/little, Rest/binary >> = Packet,
+	parse_bin_row(Rest, Fields, NullRest, [Value|Acc]);
 parse_bin_row(Packet, [{field, _, integer, ?MYSQL_TYPE_LONG}|Fields],
 		<< 0:1, NullRest/bits >>, Acc) ->
 	<< Value:32/little, Rest/binary >> = Packet,
